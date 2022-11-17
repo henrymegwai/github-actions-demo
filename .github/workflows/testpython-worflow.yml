@@ -1,0 +1,26 @@
+# this is  also a basic workflow
+
+name: A simple workflow to run python and node
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push
+  push:
+    branches: ["master"]
+
+jobs:
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo a string
+        run: eccho "Node App"
+      - name: multiline script
+        run: |
+          node -v
+          npm -v
+      - name: python commands
+        run: |
+          import platform
+          print
+          (platform.processor())
+        shell: python
