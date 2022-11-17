@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: echo a string
-        run: eccho "Node App"
+        run: echo "Node App"
       - name: multiline script
         run: |
           node -v
