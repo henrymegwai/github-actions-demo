@@ -29,3 +29,12 @@ jobs:
           print
           (platform.processor())
         shell: python
+  # Define another job
+  run-windows-commands:
+    runs-on: windows-latest
+    steps:
+      - name: Directory Powershell
+        run: Get-Location
+      - name: Directory branches
+        run: pwd
+        shell: bash
