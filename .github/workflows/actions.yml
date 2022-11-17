@@ -1,7 +1,7 @@
 name: Actions Workflow
 
 on: [push]
-   
+
 jobs:
   run-github-actions:
     runs-on: ubuntu-latest
@@ -13,4 +13,4 @@ jobs:
           who-to-greet: Henry Megwai
           #add another step name here
       - name: Log Greeting Time
-        run: echo "${{ steps.greet.outputs.time }}"
+        run: echo "$GITHUB_STATE"
