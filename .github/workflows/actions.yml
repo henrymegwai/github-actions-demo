@@ -13,4 +13,4 @@ jobs:
           who-to-greet: Henry Megwai
           #add another step name here
       - name: Log Greeting Time
-        run: echo "$GITHUB_STATE"
+        run: echo "${{ steps.greet.outputs.time }}"
