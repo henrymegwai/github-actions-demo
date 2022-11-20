@@ -24,3 +24,6 @@ jobs:
         run: echo "${{ steps.greet.outputs.time }}"
       - name: Checks-out
         uses: actions/checkout@v1
+        run: |
+          pwd
+          ls -a
