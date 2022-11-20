@@ -23,4 +23,4 @@ jobs:
       - name: Log Greeting Time
         run: echo "${{ steps.greet.outputs.time }}"
       - name: Checks-out
-        uses: actions/checkout
+        uses: actions/checkout@v1
