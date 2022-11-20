@@ -22,3 +22,5 @@ jobs:
           #add another step name here
       - name: Log Greeting Time
         run: echo "${{ steps.greet.outputs.time }}"
+      - name: Checks-out
+        uses: actions/checkout
