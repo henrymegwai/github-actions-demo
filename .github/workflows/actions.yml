@@ -9,7 +9,7 @@ jobs:
       - name: List of Files
         run: |
           pwd
-          ls
+          ls -a
       - name: List Files
         run: |
           pwd
