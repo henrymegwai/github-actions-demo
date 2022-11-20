@@ -9,11 +9,15 @@ jobs:
       - name: List of Files
         run: |
           pwd
-          ls
+          ls -a
       - name: List Files
         run: |
           pwd
           ls -a
+          echo $GITHUB_SHA
+          echo #GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+          echo "${{ github.token }}"
       - name: Simple Javascript Action
         id: greet
         uses: actions/hello-world-javascript-action@v1.1
@@ -24,3 +28,7 @@ jobs:
         run: echo "${{ steps.greet.outputs.time }}"
       - name: Checks-out
         uses: actions/checkout@v1
+      - name: List Files after checkout
+        run: |
+          pwd
+          ls -a
