@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [opened, closed, reopened]
 env:
-  WF_ENV: ${{ secrets.WF_ENV }}
+  WF_ENV: ${{ secrets.WF_SECRETS }}
 
 jobs:
   dump_contexts_to_log:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Dump WF Environment secret
         id: github_environment_wf_step
-        run: echo '${{ toJSON(secrets.WF_ENV) }}'
+        run: echo '${{ toJSON(secrets.WF_SECRETS) }}'
       - name: Dump GitHub context
         id: github_context_step
         run: echo '${{ toJSON(github) }}'
