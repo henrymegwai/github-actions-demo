@@ -4,8 +4,29 @@ on:
   push:
   pull_request:
     types: [opened, closed, reopened]
+env:
+  WF_ENV: ${{ secrets.WF_ENV }}
 
 jobs:
+  dump_contexts_to_log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump WF Environment secret
+        id: github_environment_wf_step
+        run: echo '${{ toJSON(secrets.WF_ENV) }}'
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump job context
+        run: echo '${{ toJSON(job) }}'
+      - name: Dump steps context
+        run: echo '${{ toJSON(steps) }}'
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump strategy context
+        run: echo '${{ toJSON(strategy) }}'
+      - name: Dump matrix context
+        run: echo '${{ toJSON(matrix) }}'
   create_issue:
     runs-on: ubuntu-latest
     permissions:
