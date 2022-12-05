@@ -21,7 +21,7 @@ jobs:
       - name: Dump job context
         run: echo '${{ toJSON(job) }}'
       - name: Dump steps context
-        if: ${ENV} == 'stage'
+        if: ${ env.ENV } == 'stage'
         run: echo '${{ toJSON(steps) }}'
       - name: Dump runner context
         run: echo '${{ toJSON(runner) }}'
