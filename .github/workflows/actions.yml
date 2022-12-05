@@ -20,6 +20,7 @@ jobs:
       - name: Dump job context
         run: echo '${{ toJSON(job) }}'
       - name: Dump steps context
+        if: ${{ steps.github_context_step.outputs.branch }} == 'dev'
         run: echo '${{ toJSON(steps) }}'
       - name: Dump runner context
         run: echo '${{ toJSON(runner) }}'
