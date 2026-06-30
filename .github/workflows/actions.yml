@@ -1,19 +1,65 @@
 name: Actions Workflow
 
-on: [push]
+on:
+  push:
+  pull_request:
+    types: [opened, closed, reopened]
+env:
+  WF_ENV: ${{ secrets.WF_SECRETS }}
+  ENV: "dev"
 
 jobs:
+  dump_contexts_to_log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump WF Environment secret
+        id: github_environment_wf_step
+        run: echo '${{ toJSON(secrets.WF_SECRETS) }}'
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump job context
+        run: echo '${{ toJSON(job) }}'
+      - name: Dump steps context
+        if: (env.ENV == 'stage')
+        run: echo '${{ toJSON(steps) }}'
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump strategy context
+        run: echo '${{ toJSON(strategy) }}'
+      - name: Dump matrix context
+        run: echo '${{ toJSON(matrix) }}'
+  create_issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create issue using REST API
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "title": "Automated issue for commit: ${{ github.sha }}",
+            "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
+            }' \
+          --fail
   run-github-actions:
     runs-on: ubuntu-latest
     steps:
       - name: List of Files
         run: |
           pwd
-          ls
+          ls -a
       - name: List Files
         run: |
           pwd
           ls -a
+          echo $GITHUB_SHA
+          echo #GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+          echo "${{ github.token }}"
       - name: Simple Javascript Action
         id: greet
         uses: actions/hello-world-javascript-action@v1.1
@@ -24,3 +70,7 @@ jobs:
         run: echo "${{ steps.greet.outputs.time }}"
       - name: Checks-out
         uses: actions/checkout@v1
+      - name: List Files after checkout
+        run: |
+          pwd
+          ls -a
